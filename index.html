@@ -81,8 +81,9 @@
         </div>
 
         <div class="ia21-player">
+            <!-- https://gist.github.com/jsturgis/3b19447b304616f18657 -->
             <video>
-                <source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
+                <source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4" type="video/mp4">
             </video>
             <div class="controllers">
                 <button class="play-pause" data-deleteme="⏸">
@@ -122,10 +123,14 @@
 
                 video.addEventListener("timeupdate", () => {
                     const percent = (video.currentTime / video.duration) * 100
+                    const seconds = Math.floor(video.currentTime % 60)
+                    const minutes = Math.floor((video.currentTime / 60) % 60)
+                    const hours = Math.floor(video.currentTime / 3600)
                     timelineDrag.style.setProperty("--percent", `${percent}%`) 
                     
                     console.log(`segundos video.currentTime % 60: ${video.currentTime % 60}`)
-                    timer.innerText = `${Math.floor(video.currentTime / 3600)}:${Math.floor(video.currentTime / 60)}:${video.currentTime % 60 < 10 ? '0' : ''}${ Math.floor(video.currentTime % 60)}`
+                    
+                    timer.innerText = `${hours < 10 ? '0' : ''}${hours}:${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`
 
 
             })
