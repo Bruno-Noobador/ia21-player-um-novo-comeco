@@ -103,6 +103,27 @@
             </div>
         </div>
 
+        <div class="ia21-player">
+            <!-- https://gist.github.com/jsturgis/3b19447b304616f18657 -->
+            <video>
+                <source src="empty_10_hours.mp4" type="video/mp4">
+            </video>
+            <div class="controllers">
+                <button class="play-pause" data-pause-icon="❚❚" data-play-icon="▶">
+                    ▶ 
+                </button>
+                <div class="dragbar timeline">
+                    <div class="draggable"></div>
+                </div>
+                <div class="timer">
+                    00:00
+                </div>
+                <div class="dragbar volume">
+                    <div class="draggable"></div>
+                </div>
+            </div>
+        </div>
+
         <script>
             const containers = document.querySelectorAll("div.ia21-player")
             
@@ -139,19 +160,38 @@
                     
                     // console.log(`segundos video.currentTime % 60: ${video.currentTime % 60}`)
                     
-                    // timer.innerText = `${hours < 1 ? ${hours}':' : ''}${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`
+                    timer.innerText = `${hours > 0 ? hours+':' : ''}${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`
 
 
             })
 
             
             const dragbars = container.querySelectorAll(".dragbar")
-
-            dragbar.forEach(dragbar => {
-                const draggable = dragbar.querySelector("draggable")
+            
+            dragbars.forEach(dragbar => {
+                const dragabble = dragbar.querySelector(".draggable")
+                
+                if (dragbar.classList.contains("volume")) {
+                    dragabble.style.setProperty("--percent", "100%")
+                        return
+                    }
+                
                 dragbar.addEventListener("click", ev => {
-                    const width = dragbar.getBoundingClientReact().width
-                    console.log(ev.offsetX)
+                    const width = Math.floor(dragbar.getBoundingClientRect().width)
+                    const index = (ev.offsetX / width)
+                    const percent = index * 100
+                    dragabble.style.setProperty("--percent", `${percent}%`)
+                    
+                    if (dragbar.classList.contains("timeline")) {
+                        video.currentTime = video.duration * index
+                        return
+                    }
+                    
+                    if (dragbar.classList.contains("volume")) {
+                        video.volume = index
+                        return
+                    }
+
                 })
             })
 
