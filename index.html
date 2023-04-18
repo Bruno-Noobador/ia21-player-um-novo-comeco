@@ -29,6 +29,8 @@
                 border: 0 none;
                 border-right: 1px solid black;
                 cursor: pointer;
+                width: 25px;
+                height: 20px;
 
             }
 
@@ -65,7 +67,7 @@
                 <source src="https://www.w3schools.com/html/movie.ogg" type="video/ogg">
             </video>
             <div class="controllers">
-                <button class="play-pause" data-deleteme="⏸">
+                <button class="play-pause" data-pause-icon="❚❚" data-play-icon="▶">
                     ▶ 
                 </button>
                 <div class="dragbar timeline">
@@ -86,7 +88,7 @@
                 <source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4" type="video/mp4">
             </video>
             <div class="controllers">
-                <button class="play-pause" data-deleteme="⏸">
+                <button class="play-pause" data-pause-icon="❚❚" data-play-icon="▶">
                     ▶ 
                 </button>
                 <div class="dragbar timeline">
@@ -111,12 +113,19 @@
                 const timelineDrag = timeline.querySelector(".draggable")
                 const timer = container.querySelector(".timer")
 
+                // video.currentTime = 59
 
                 btPlayPause.addEventListener("click", () => {
                     
-                    if (video.paused) 
+                    if (video.paused) { 
                         video.play()
-                        video.currentTime = 59
+                        btPlayPause.innerText = btPlayPause.dataset.pauseIcon
+                        return
+                    }
+
+                    video.pause()
+                    btPlayPause.innerText = btPlayPause.dataset.playIcon
+
 
                 })
 
@@ -128,12 +137,24 @@
                     const hours = Math.floor(video.currentTime / 3600)
                     timelineDrag.style.setProperty("--percent", `${percent}%`) 
                     
-                    console.log(`segundos video.currentTime % 60: ${video.currentTime % 60}`)
+                    // console.log(`segundos video.currentTime % 60: ${video.currentTime % 60}`)
                     
-                    timer.innerText = `${hours < 10 ? '0' : ''}${hours}:${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`
+                    // timer.innerText = `${hours < 1 ? ${hours}':' : ''}${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`
 
 
             })
+
+            
+            const dragbars = container.querySelectorAll(".dragbar")
+
+            dragbar.forEach(dragbar => {
+                const draggable = dragbar.querySelector("draggable")
+                dragbar.addEventListener("click", ev => {
+                    const width = dragbar.getBoundingClientReact().width
+                    console.log(ev.offsetX)
+                })
+            })
+
         })
         </script>
 
