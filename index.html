@@ -47,7 +47,7 @@
                 cursor: pointer;
                 position: absolute;
                 top: calc(50% - 0.25rem);
-                left: calc(var(--percent) - .25rem)
+                left: calc(var(--percent) - var(--dragOffset));
             }
 
             div.ia21-player div.controllers div.dragbar:before {
@@ -153,10 +153,14 @@
 
                 video.addEventListener("timeupdate", () => {
                     const percent = (video.currentTime / video.duration) * 100
+                    const dragOffset = (percent / 100) / 2
+
                     const seconds = Math.floor(video.currentTime % 60)
                     const minutes = Math.floor((video.currentTime / 60) % 60)
                     const hours = Math.floor(video.currentTime / 3600)
-                    timelineDrag.style.setProperty("--percent", `${percent}%`) 
+
+                    timelineDrag.style.setProperty("--percent", `${percent}%`)
+                    timelineDrag.style.setProperty("--dragOffset", `${dragOffset}rem`)
                     
                     // console.log(`segundos video.currentTime % 60: ${video.currentTime % 60}`)
                     
@@ -173,22 +177,27 @@
                 
                 if (dragbar.classList.contains("volume")) {
                     dragabble.style.setProperty("--percent", "100%")
-                        return
+                    dragabble.style.setProperty("--dragOffset", "0.5rem")
                     }
                 
                 dragbar.addEventListener("click", ev => {
                     const width = Math.floor(dragbar.getBoundingClientRect().width)
                     const index = (ev.offsetX / width)
+                    const dragOffset = index / 2
                     const percent = index * 100
                     dragabble.style.setProperty("--percent", `${percent}%`)
+                    dragabble.style.setProperty("--dragOffset", `${dragOffset}rem`)
                     
                     if (dragbar.classList.contains("timeline")) {
                         video.currentTime = video.duration * index
+                        console.log("Timeline existe")
                         return
                     }
                     
                     if (dragbar.classList.contains("volume")) {
                         video.volume = index
+                        console.log("Som existe")
+                        console.log(`volume: ${index}`)
                         return
                     }
 
