@@ -13,6 +13,18 @@
             font-family: 'Fira Code', monospace;
             }
 
+            div.ia21-player .controllers {
+                opacity: 0;
+                visibility: hidden;
+                transition: 1s .3s;
+            }
+
+            div.ia21-player:hover .controllers {
+                opacity: 1;
+                visibility: visible;
+            }
+
+
             div.ia21-player {
                 display: flex;
                 flex-direction: column;
