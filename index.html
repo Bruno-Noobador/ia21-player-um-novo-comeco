@@ -2,6 +2,7 @@
 <html lang="pt-BR">
     <head>
         <meta charset="utf8">
+        
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300&display=swap" rel="stylesheet">
@@ -70,6 +71,7 @@
                 position: absolute;
                 top: calc(50% - 0.25rem);
                 left: calc(var(--percent) - var(--dragOffset));
+                pointer-events: none;
             }
             
             div.ia21-player div.controllers div.dragbar:before {
@@ -138,9 +140,12 @@
                         console.log("Waiting")
                         
                         async function wait3Seconds() {
+                            console.log("time passing")
                             await new Promise(resolve => setTimeout(resolve, 3000));
+                            console.log("time passed")
+                            controllers.style.visibility = "hidden"
                         }
-                        console.log("timepassed")
+                        wait3Seconds()
 
                         controllers.style.visibility = "hidden"
                         return
