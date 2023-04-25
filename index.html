@@ -2,35 +2,51 @@
 <html lang="pt-BR">
     <head>
         <meta charset="utf8">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300&display=swap" rel="stylesheet">
         <title>Player</title>
         <style>
-            * { box-sizing: border-box;}
+            * { 
+            box-sizing: border-box;
+            font-family: 'Fira Code', monospace;
+            }
 
             div.ia21-player {
                 display: flex;
                 flex-direction: column;
-                border: 1px solid black;
-                width: 200px;
+                border: 5px solid rgb(244, 149, 191);
+                width: 250px;
+                border-radius: 5px;
             }
 
             div.ia21-player video {
                 width: 100%;
+                overflow: hidden;
+                
+                
             }
 
 
             div.ia21-player .controllers {
                 display: flex;
-                border-top: 1px solid black;
+                border-top: 1px solid rgb(244, 149, 191);
                 column-gap: 10px;
+                position: relative;
+                margin-top: -26.5px;
+                background-color: white;
+                
             }
 
             div.ia21-player .controllers button.play-pause {
                 background-color: transparent;
                 border: 0 none;
-                border-right: 1px solid black;
+                border-right: 1px solid rgb(244, 149, 191);
                 cursor: pointer;
-                width: 25px;
-                height: 20px;
+                width: 31.5px;
+                height: 26.5px;
+                text-align: center;
+                color: rgb(241, 116, 166);
 
             }
 
@@ -39,8 +55,14 @@
                 position: relative;
             }
 
+            div.ia21-player .controllers div.timer {
+                color: rgb(241, 116, 166);
+                padding-top: 2.5px;
+            }
+            
             div.ia21-player div.controllers div.dragbar div.draggable {
-                background-color: black;
+                /* rgb(195, 0, 82) */
+                background-color: rgb(238, 63, 134);
                 width: 0.5rem;
                 height: 0.5rem;
                 border-radius: 50%;
@@ -49,38 +71,22 @@
                 top: calc(50% - 0.25rem);
                 left: calc(var(--percent) - var(--dragOffset));
             }
-
+            
             div.ia21-player div.controllers div.dragbar:before {
                 content: " ";
                 position: absolute;
-                border-top: 1px solid black;
+                border-top: 1px solid rgb(244, 149, 191) ;
                 width: 100%;
                 top: calc(50% - 0.5px);
             }
+
+            video::-webkit-media-controls {
+            display:none !important;
+            }
+
         </style>
     </head>
     <body>
-
-        <div class="ia21-player">
-            <video>
-                <source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4">
-                <source src="https://www.w3schools.com/html/movie.ogg" type="video/ogg">
-            </video>
-            <div class="controllers">
-                <button class="play-pause" data-pause-icon="❚❚" data-play-icon="▶">
-                    ▶ 
-                </button>
-                <div class="dragbar timeline">
-                    <div class="draggable"></div>
-                </div>
-                <div class="timer">
-                    00:00
-                </div>
-                <div class="dragbar volume">
-                    <div class="draggable"></div>
-                </div>
-            </div>
-        </div>
 
         <div class="ia21-player">
             <!-- https://gist.github.com/jsturgis/3b19447b304616f18657 -->
@@ -88,29 +94,8 @@
                 <source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4" type="video/mp4">
             </video>
             <div class="controllers">
-                <button class="play-pause" data-pause-icon="❚❚" data-play-icon="▶">
-                    ▶ 
-                </button>
-                <div class="dragbar timeline">
-                    <div class="draggable"></div>
-                </div>
-                <div class="timer">
-                    00:00
-                </div>
-                <div class="dragbar volume">
-                    <div class="draggable"></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="ia21-player">
-            <!-- https://gist.github.com/jsturgis/3b19447b304616f18657 -->
-            <video>
-                <source src="empty_10_hours.mp4" type="video/mp4">
-            </video>
-            <div class="controllers">
-                <button class="play-pause" data-pause-icon="❚❚" data-play-icon="▶">
-                    ▶ 
+                <button class="play-pause" data-pause-icon="❚❚" data-play-icon="▶" data-start-icon="🌸">
+                    🌸 
                 </button>
                 <div class="dragbar timeline">
                     <div class="draggable"></div>
@@ -128,11 +113,14 @@
             const containers = document.querySelectorAll("div.ia21-player")
             
             containers.forEach (container => {
+                const controllers = container.querySelector("controllers")
                 const btPlayPause = container.querySelector("button.play-pause")
                 const video = container.querySelector("video")
                 const timeline = container.querySelector(".dragbar.timeline")
                 const timelineDrag = timeline.querySelector(".draggable")
                 const timer = container.querySelector(".timer")
+
+                let isVideoFullscreen = false
 
                 // video.currentTime = 59
 
@@ -140,12 +128,27 @@
                     
                     if (video.paused) { 
                         video.play()
+                        // controllers.style.setProperty("visibility", "hidden")
+                        
+                        console.log("started playing")
+
+                        
                         btPlayPause.innerText = btPlayPause.dataset.pauseIcon
+                        
+                        console.log("Waiting")
+                        
+                        async function wait3Seconds() {
+                            await new Promise(resolve => setTimeout(resolve, 3000));
+                        }
+                        console.log("timepassed")
+
+                        controllers.style.visibility = "hidden"
                         return
                     }
 
                     video.pause()
                     btPlayPause.innerText = btPlayPause.dataset.playIcon
+                    controllers.style.visibility = "visible"
 
 
                 })
@@ -169,6 +172,41 @@
 
             })
 
+            video.addEventListener("click", () => {
+                btPlayPause.click()
+            })
+
+            video.addEventListener("dblclick", () => {
+                console.log("Double Clicked")
+                console.log(`isVideoFullscreen: ${isVideoFullscreen}`)
+                
+                if (isVideoFullscreen) {
+                    document.exitFullscreen()
+                    isVideoFullscreen = false
+                    return
+                }
+                    video.requestFullscreen()
+                    isVideoFullscreen = true
+            });
+
+            document.addEventListener("keydown", (e) => {
+                
+                if (event.key.toLowerCase() === 'f') {
+                    console.log("Payed Respect")
+
+                }
+
+                if (event.code === 'Space') {
+                    btPlayPause.click()
+                }
+            })
+
+            video.addEventListener("ended", () => {
+                btPlayPause.innerText = btPlayPause.dataset.startIcon
+            })
+
+
+
             
             const dragbars = container.querySelectorAll(".dragbar")
             
@@ -190,13 +228,16 @@
                     
                     if (dragbar.classList.contains("timeline")) {
                         video.currentTime = video.duration * index
-                        console.log("Timeline existe")
+                        
+                        if (btPlayPause.innerText == btPlayPause.dataset.startIcon) btPlayPause.innerText = btPlayPause.dataset.pauseIcon
+                        // if (video.paused) btPlayPause.click()
+                        // console.log("Timeline existe")
                         return
                     }
                     
                     if (dragbar.classList.contains("volume")) {
                         video.volume = index
-                        console.log("Som existe")
+                        // console.log("Som existe")
                         console.log(`volume: ${index}`)
                         return
                     }
