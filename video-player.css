@@ -1,0 +1,165 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-image: url('assets/op1 wallpaper (blur).png');
+    background-position: center;
+    -moz-background-size: cover;
+    background-size: cover;
+    background-attachment: fixed;
+    display: flex;
+}
+
+main {
+    top: 5em;
+    border: 0.15em solid black;
+    font-family: 'Rubik';
+    left: 1em;
+    right: 1em;
+    background: -webkit-gradient(linear, left top, left bottom, from(#aaccff), to(#aa88ee));
+    border-radius: 0.5em;
+    /* border-width: 1em; */
+    border-style: solid;
+    box-shadow: 0em 0.5em 0.5em rgba(0,0,0,.5);
+    /* column-gap: 2em; */
+    background-color: white;
+    border-radius: 10px;
+    display: inline-block;
+    /* margin-left: 50%; */
+    /* background-color: -webkit-gradient(linear, left top, left bottom, from(#aaccff), to(#aa88ee)); */
+    position: fixed;
+}
+
+div.sakura.decoration {
+    background-image: url('assets/sakura_treetop_8bit.png');
+    background-repeat: no-repeat;
+    position: fixed;
+    top: 0px;
+    height: 50em;
+    width: 100em;
+}
+
+
+div.ia21-player .controllers {
+    opacity: 0;
+    visibility: hidden;
+    transition: .5s .3s;
+    justify-content: center;
+    align-items: center;
+}
+
+div.ia21-player:hover .controllers {
+    opacity: 1;
+    visibility: visible;
+
+}
+
+
+div.ia21-player {
+    display: flex;
+    font-family: 'Fira Code', monospace;
+    flex-direction: column;
+    border: 5px solid rgb(244, 149, 191);
+    width: 25rem;
+    margin-left: 5em;
+    margin-bottom: 5em;
+    /* border-radius: 5px; */
+}
+
+div.ia21-player video {
+    width: 100%;
+    overflow: hidden;
+    top: 5em;
+    bottom: 5em;
+}
+
+
+div.ia21-player .controllers {
+    display: flex;
+    border-top: 0.15em solid rgb(244, 149, 191);
+    column-gap: 1em;
+    position: relative;
+    margin-top: -3.1rem;
+    background-color: white;
+
+}
+
+div.ia21-player .controllers button.play-pause {
+    background-color: transparent;
+    border: 0 none;
+    border-right: 0.15em solid rgb(244, 149, 191);
+    cursor: pointer;
+    font-size: 1.5em;
+    padding: .5em;
+    line-height: 1em;
+    width: 3em;
+    color: rgb(241, 116, 166);
+
+}
+
+div.ia21-player div.controllers div.dragbar.timeline {
+    width: 70%;
+}
+
+div.ia21-player div.controllers div.dragbar {
+    flex-grow: 1;
+    position: relative;
+}
+
+div.ia21-player .controllers div.timer {
+    color: rgb(241, 116, 166);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+div.ia21-player div.controllers div.dragbar div.draggable {
+    /* rgb(195, 0, 82) */
+    background-color: rgb(238, 63, 134);
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    cursor: pointer;
+    position: absolute;
+    top: calc(50% - 0.25rem);
+    left: calc(var(--percent) - var(--dragOffset));
+    pointer-events: none;
+}
+
+div.ia21-player div.controllers div.dragbar:before {
+    content: " ";
+    position: absolute;
+    border-top: 0.15em solid rgb(244, 149, 191);
+    width: 100%;
+    top: calc(50% - 0.5px);
+}
+
+div.ia21-player .controllers div.volume {
+    color: rgb(241, 116, 166);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 1em;
+    transition: 1s 0s;
+}
+
+div.ia21-player .controllers div.volume .dragbar.volume {
+    visibility: hidden;
+}
+
+div.ia21-player .controllers div.volume div.volume.button {
+    cursor: pointer;
+}
+
+div.ia21-player .controllers div.fullscreen.button {
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    color: rgb(241, 116, 166);
+    padding-right: 0.5em;
+}
+
+video::-webkit-media-controls {
+    display: none !important;
+}
