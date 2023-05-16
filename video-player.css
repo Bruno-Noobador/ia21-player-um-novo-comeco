@@ -3,7 +3,7 @@
 }
 
 body {
-    background-image: url('assets/op1 wallpaper (blur).png');
+    background-image: url('assets/wallpapers/op1 wallpaper (blur).png');
     background-position: center;
     -moz-background-size: cover;
     background-size: cover;
@@ -36,8 +36,8 @@ div.sakura.decoration {
     background-repeat: no-repeat;
     position: fixed;
     top: 0px;
-    height: 50em;
-    width: 100em;
+    height: 8em;
+    width: 69em;
 }
 
 
@@ -64,7 +64,7 @@ div.ia21-player {
     width: 25rem;
     margin-left: 5em;
     margin-bottom: 5em;
-    /* border-radius: 5px; */
+    border-radius: 5px;
 }
 
 div.ia21-player video {
@@ -141,7 +141,7 @@ div.ia21-player .controllers div.volume {
     justify-content: center;
     align-items: center;
     column-gap: 1em;
-    transition: 1s 0s;
+    transition: 0.3s 0s;
 }
 
 div.ia21-player .controllers div.volume .dragbar.volume {
